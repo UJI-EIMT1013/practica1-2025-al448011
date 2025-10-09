@@ -3,12 +3,15 @@ package practica1;
 import java.util.*;
 
 public class Practica1 {
+
+    //EJERCICIO 1
     public static Set<Integer> multiplos (Iterator<Integer> it) {
 
         List<Integer> lista = new ArrayList<>();
 
-        while (it.hasNext())
+        while (it.hasNext()) {
             lista.add(it.next());
+        }
 
         Set<Integer> resultado = new HashSet<>();
 
@@ -20,10 +23,10 @@ public class Practica1 {
             for (int j = 0; j < lista.size(); j++) {
 
                 if (i == j) continue;
+                int y = lista.get(j);
+                if (y == 0) continue;
 
-                int b = lista.get(j);
-                if (b == 0) continue;
-                if (x % b == 0) {
+                if (x % y == 0) {
                     resultado.add(x);
                     break;
                 }
@@ -32,12 +35,44 @@ public class Practica1 {
         return resultado;
     }
 
-    //EJERCICIO 1
-
     //EJERCICIO2
     public static void separate (Set<Integer> cuadrados, Set<Integer> noCuadrados)  {
-        //TODO
 
+        Set<Integer> conjuntoAux = new HashSet<>();
+
+        conjuntoAux.addAll(cuadrados);
+        conjuntoAux.addAll(noCuadrados);
+
+        Set<Integer> cuadradosFinal = new HashSet<>();
+        Set<Integer> noCuadradosFinal = new HashSet<>();
+
+        for (Integer n : conjuntoAux) {
+
+            double raizCuadrada = Math.sqrt(n);
+            int raizInt = (int) raizCuadrada;
+            boolean cuadradoValido = false;
+
+            if (raizCuadrada == raizInt) {
+                if (n == raizInt) {
+                    if (cuadrados.contains(raizInt) && noCuadrados.contains(raizInt))
+                        cuadradoValido = true;
+                } else {
+                    if (conjuntoAux.contains(raizInt))
+                        cuadradoValido = true;
+                }
+            }
+
+            if (cuadradoValido)
+                cuadradosFinal.add(n);
+            else
+                noCuadradosFinal.add(n);
+        }
+
+        cuadrados.clear();
+        noCuadrados.clear();
+
+        cuadrados.addAll(cuadradosFinal);
+        noCuadrados.addAll(noCuadradosFinal);
     }
 
     //EJERCICIO 3
